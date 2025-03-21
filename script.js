@@ -22,6 +22,33 @@ function saveCartToLocalStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
+// Function to calculate total cart price
+function calculateTotal() {
+  return cart.reduce((total, item) => total + item.price, 0);
+}
+
+// Function to handle checkout
+function checkout() {
+  const total = calculateTotal();
+  
+  if (cart.length === 0) {
+    alert('Your cart is empty!');
+    return;
+  }
+
+  const confirmCheckout = confirm(`Total amount: $${total}\nProceed to checkout?`);
+  
+  if (confirmCheckout) {
+    // Clear the cart
+    cart = [];
+    cartCount = 0;
+    updateCartCount();
+    saveCartToLocalStorage();
+    alert('Thank you for your purchase!');
+    window.location.href = 'index.html';
+  }
+}
+
 // Update cart count on page load
 document.addEventListener('DOMContentLoaded', () => {
   updateCartCount();
