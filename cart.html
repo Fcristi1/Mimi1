@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
+    <title>Shopping Cart - Mimi Boutique</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Shopping Cart</h1>
+        <h1>Your Shopping Cart</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
@@ -23,20 +23,17 @@
     </header>
 
     <main>
-        <div class="cart-items">
-            <h2>Your Cart</h2>
-            <div id="cart-items-container">
-                <!-- Cart items will be displayed here -->
-            </div>
+        <section class="cart-container">
+            <div id="cart-items"></div>
             <div class="cart-summary">
-                <p>Total: $<span id="cart-total">0</span></p>
-                <button onclick="checkout()" class="checkout-btn">Proceed to Checkout</button>
+                <h3>Cart Total: $<span id="cart-total">0.00</span></h3>
+                <button id="checkout-btn" class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
             </div>
-        </div>
+        </section>
     </main>
 
     <footer>
-        <p>&copy; 2023 Clothing Store. All rights reserved.</p>
+        <p>&copy; 2023 Mimi Boutique. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
