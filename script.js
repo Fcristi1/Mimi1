@@ -1,93 +1,99 @@
-// Initialize cart if it doesn't exist in localStorage
+// Initialize cart from localStorage
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let cartCount = cart.length;
 
+// Update cart count on page load
+document.addEventListener('DOMContentLoaded', () => {
+    updateCartCount();
+});
+
 // Function to add a product to the cart
 function addToCart(productName, price) {
-  const product = { name: productName, price: price };
-  cart.push(product);
-  cartCount++;
-  updateCartCount();
-  saveCartToLocalStorage();
-  alert(`${productName} added to cart!`);
+    const product = {
+        name: productName,
+        price: parseFloat(price)
+    };
+    cart.push(product);
+    cartCount++;
+    updateCartCount();
+    saveCart();
+    alert(`${productName} added to cart!`);
 }
 
 // Function to update the cart count in the UI
 function updateCartCount() {
-  document.getElementById('cart-count').textContent = cartCount;
+    const cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) {
+        cartCountElement.textContent = cartCount;
+    }
 }
 
 // Function to save the cart to localStorage
-function saveCartToLocalStorage() {
-  localStorage.setItem('cart', JSON.stringify(cart));
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Function to calculate total cart price
-function calculateTotal() {
-  return cart.reduce((total, item) => total + item.price, 0).toFixed(2);
-}
-
-// Function to display cart items
+// Function to display cart items in cart.html
 function displayCart() {
-  const cartItems = document.getElementById('cart-items');
-  const cartTotal = document.getElementById('cart-total');
-  
-  if (!cartItems) return;
-  
-  cartItems.innerHTML = '';
-  
-  if (cart.length === 0) {
-    cartItems.innerHTML = '<p>Your cart is empty</p>';
-    cartTotal.textContent = '0.00';
-    return;
-  }
+    const cartItemsElement = document.getElementById('cart-items');
+    const cartTotalElement = document.getElementById('cart-total');
 
-  cart.forEach((item, index) => {
-    const itemDiv = document.createElement('div');
-    itemDiv.className = 'cart-item';
-    itemDiv.innerHTML = `
-      <span>${item.name}</span>
-      <span>$${item.price.toFixed(2)}</span>
-      <button onclick="removeFromCart(${index})">Remove</button>
-    `;
-    cartItems.appendChild(itemDiv);
-  });
+    if (!cartItemsElement || !cartTotalElement) return;
 
-  cartTotal.textContent = calculateTotal();
+    cartItemsElement.innerHTML = '';
+    let total = 0;
+
+    if (cart.length === 0) {
+        cartItemsElement.innerHTML = '<p>Your cart is empty.</p>';
+        cartTotalElement.textContent = '0.00';
+        return;
+    }
+
+    cart.forEach((item, index) => {
+        const cartItemDiv = document.createElement('div');
+        cartItemDiv.classList.add('cart-item');
+        cartItemDiv.innerHTML = `
+            <span>${item.name}</span>
+            <span>$${item.price.toFixed(2)}</span>
+            <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartItemsElement.appendChild(cartItemDiv);
+        total += item.price;
+    });
+
+    cartTotalElement.textContent = total.toFixed(2);
 }
 
 // Function to remove item from cart
 function removeFromCart(index) {
-  cart.splice(index, 1);
-  cartCount--;
-  updateCartCount();
-  saveCartToLocalStorage();
-  displayCart();
+    cart.splice(index, 1);
+    cartCount--;
+    updateCartCount();
+    saveCart();
+    displayCart();
 }
 
 // Function to handle checkout
 function checkout() {
-  if (cart.length === 0) {
-    alert('Your cart is empty!');
-    return;
-  }
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
 
-  const total = calculateTotal();
-  const confirmCheckout = confirm(`Total amount: $${total}\nProceed to checkout?`);
-  
-  if (confirmCheckout) {
-    // Clear the cart
-    cart = [];
-    cartCount = 0;
-    updateCartCount();
-    saveCartToLocalStorage();
-    alert('Thank you for your purchase!');
-    window.location.href = 'index.html';
-  }
+    const total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+    const confirmCheckout = confirm(`Total amount: $${total}\nProceed to checkout?`);
+
+    if (confirmCheckout) {
+        cart = [];
+        cartCount = 0;
+        updateCartCount();
+        saveCart();
+        alert('Thank you for your purchase!');
+        window.location.href = 'index.html';
+    }
 }
 
-// Update cart count on page load
-document.addEventListener('DOMContentLoaded', () => {
-  updateCartCount();
-  displayCart();
-});
+// Display cart on cart page
+if (window.location.pathname.includes('cart.html')) {
+    displayCart();
+}
