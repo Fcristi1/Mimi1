@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pants - Mimi Boutique</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .product-window {
+      width: 200px;
+      height: 200px;
+      border: 1px solid #ccc;
+      margin: 10px;
+      display: inline-block;
+      text-align: center;
+      padding: 10px;
+    }
+    .filter {
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -22,26 +36,123 @@
   </header>
 
   <main>
-    <section class="products">
-      <div class="product">
-        <img src="images/pants1.jpg" alt="Jeans">
-        <h3>Jeans</h3>
-        <p>$40.00</p>
-        <button onclick="addToCart('Jeans', 40)">Add to Cart</button>
-      </div>
-      <div class="product">
-        <img src="images/pants2.jpg" alt="Chinos">
-        <h3>Chinos</h3>
-        <p>$35.00</p>
-        <button onclick="addToCart('Chinos', 35)">Add to Cart</button>
-      </div>
-    </section>
+    <div class="filter">
+      <label for="brand">Brand:</label>
+      <select id="brand">
+        <option value="all">All</option>
+        <option value="Levi's">Levi's</option>
+        <option value="Wrangler">Wrangler</option>
+        <option value="Dockers">Dockers</option>
+      </select>
+
+      <label for="size">Size:</label>
+      <select id="size">
+        <option value="all">All</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+      </select>
+
+      <label for="model">Model:</label>
+      <select id="model">
+        <option value="all">All</option>
+        <option value="501 Original">501 Original</option>
+        <option value="Slim Fit">Slim Fit</option>
+        <option value="Relaxed Fit">Relaxed Fit</option>
+        <option value="Chinos">Chinos</option>
+        <option value="Cargo">Cargo</option>
+      </select>
+
+      <label for="color">Color:</label>
+      <select id="color">
+        <option value="all">All</option>
+        <option value="black">Black</option>
+        <option value="blue">Blue</option>
+        <option value="khaki">Khaki</option>
+        <option value="grey">Grey</option>
+      </select>
+
+      <button onclick="filterProducts()">Filter</button>
+      <button onclick="clearFilter()">Clear Filter</button>
+    </div>
+
+    <div id="product-container">
+      <!-- Product windows will be added here -->
+    </div>
   </main>
 
   <footer>
     <p>&copy; 2023 Mimi Boutique. All rights reserved.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    const products = [
+      { brand: "Levi's", size: 'M', model: '501 Original', color: 'blue', price: 50 },
+      { brand: "Wrangler", size: 'L', model: 'Slim Fit', color: 'black', price: 45 },
+      { brand: "Dockers", size: 'S', model: 'Relaxed Fit', color: 'khaki', price: 40 },
+      { brand: "Levi's", size: 'XL', model: 'Chinos', color: 'grey', price: 35 },
+      { brand: "Wrangler", size: 'M', model: 'Cargo', color: 'blue', price: 55 },
+      { brand: "Dockers", size: 'L', model: '501 Original', color: 'black', price: 50 },
+      { brand: "Levi's", size: 'S', model: 'Slim Fit', color: 'khaki', price: 45 },
+      { brand: "Wrangler", size: 'XL', model: 'Relaxed Fit', color: 'grey', price: 40 },
+      { brand: "Dockers", size: 'M', model: 'Chinos', color: 'blue', price: 35 },
+      { brand: "Levi's", size: 'L', model: 'Cargo', color: 'black', price: 55 }
+    ];
+
+    function displayProducts(filteredProducts) {
+      const container = document.getElementById('product-container');
+      container.innerHTML = '';
+      filteredProducts.forEach(product => {
+        const productWindow = document.createElement('div');
+        productWindow.className = 'product-window';
+        productWindow.innerHTML = `
+          <p>${product.model}</p>
+          <p>Brand: ${product.brand}</p>
+          <p>Size: ${product.size}</p>
+          <p>Color: ${product.color}</p>
+          <p>Price: $${product.price.toFixed(2)}</p>
+          <button onclick="addToCart('${product.brand}', '${product.size}', '${product.model}', '${product.color}', ${product.price})">Add to Cart</button>
+        `;
+        container.appendChild(productWindow);
+      });
+      console.log('Displayed Products:', filteredProducts); // Debugging line
+    }
+
+    function filterProducts() {
+      const brand = document.getElementById('brand').value;
+      const size = document.getElementById('size').value;
+      const model = document.getElementById('model').value;
+      const color = document.getElementById('color').value;
+
+      console.log(`Filtering by: Brand=${brand}, Size=${size}, Model=${model}, Color=${color}`); // Debugging line
+
+      const filteredProducts = products.filter(product => {
+        return (brand === 'all' || product.brand.toLowerCase() === brand.toLowerCase()) &&
+               (size === 'all' || product.size === size) &&
+               (model === 'all' || product.model.toLowerCase() === model.toLowerCase()) &&
+               (color === 'all' || product.color.toLowerCase() === color.toLowerCase());
+      });
+
+      console.log('Filtered Products:', filteredProducts); // Debugging line
+      displayProducts(filteredProducts);
+    }
+
+    function clearFilter() {
+      document.getElementById('brand').value = 'all';
+      document.getElementById('size').value = 'all';
+      document.getElementById('model').value = 'all';
+      document.getElementById('color').value = 'all';
+      displayProducts(products);
+    }
+
+    function addToCart(brand, size, model, color, price) {
+      // Add to cart functionality
+      alert(`Added ${model} to cart.`);
+    }
+
+    // Initial display of products
+    displayProducts(products);
+  </script>
 </body>
 </html>
