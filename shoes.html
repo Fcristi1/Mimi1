@@ -122,12 +122,13 @@
       const color = document.getElementById('color').value;
 
       const filteredProducts = products.filter(product => {
-        return (brand === 'all' || product.brand === brand) &&
+        return (brand === 'all' || product.brand.toLowerCase() === brand.toLowerCase()) &&
                (size === 'all' || product.size == size) &&
-               (model === 'all' || product.model === model) &&
-               (color === 'all' || product.color === color);
+               (model === 'all' || product.model.toLowerCase() === model.toLowerCase()) &&
+               (color === 'all' || product.color.toLowerCase() === color.toLowerCase());
       });
 
+      console.log('Filtered Products:', filteredProducts); // Debugging line
       displayProducts(filteredProducts);
     }
 
