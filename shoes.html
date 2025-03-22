@@ -121,6 +121,8 @@
       const model = document.getElementById('model').value;
       const color = document.getElementById('color').value;
 
+      console.log(`Filtering by: Brand=${brand}, Size=${size}, Model=${model}, Color=${color}`); // Debugging line
+
       const filteredProducts = products.filter(product => {
         return (brand === 'all' || product.brand.toLowerCase() === brand.toLowerCase()) &&
                (size === 'all' || product.size == size) &&
