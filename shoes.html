@@ -70,6 +70,7 @@
       </select>
 
       <button onclick="filterProducts()">Filter</button>
+      <button onclick="clearFilter()">Clear Filter</button>
     </div>
 
     <div id="product-container">
@@ -133,6 +134,14 @@
 
       console.log('Filtered Products:', filteredProducts); // Debugging line
       displayProducts(filteredProducts);
+    }
+
+    function clearFilter() {
+      document.getElementById('brand').value = 'all';
+      document.getElementById('size').value = 'all';
+      document.getElementById('model').value = 'all';
+      document.getElementById('color').value = 'all';
+      displayProducts(products);
     }
 
     function addToCart(brand, size, model, color, price) {
