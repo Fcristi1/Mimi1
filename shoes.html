@@ -56,9 +56,12 @@
       <label for="model">Model:</label>
       <select id="model">
         <option value="all">All</option>
-        <option value="running">Running</option>
-        <option value="casual">Casual</option>
-        <option value="formal">Formal</option>
+        <option value="airmax90">Nike Air Max 90</option>
+        <option value="ultraboost">Adidas UltraBoost</option>
+        <option value="suedeclassic">Puma Suede Classic</option>
+        <option value="pegasus">Nike Pegasus</option>
+        <option value="superstar">Adidas Superstar</option>
+        <option value="rsx">Puma RS-X</option>
       </select>
 
       <label for="color">Color:</label>
@@ -84,18 +87,18 @@
 
   <script>
     const products = [
-      { brand: 'Nike', size: 8, model: 'running', color: 'black', price: 50 },
-      { brand: 'Adidas', size: 9, model: 'casual', color: 'white', price: 45 },
-      { brand: 'Puma', size: 7, model: 'formal', color: 'blue', price: 60 },
-      { brand: 'Nike', size: 9, model: 'running', color: 'white', price: 50 },
-      { brand: 'Adidas', size: 8, model: 'casual', color: 'black', price: 45 },
-      { brand: 'Puma', size: 9, model: 'formal', color: 'white', price: 60 },
-      { brand: 'Nike', size: 7, model: 'running', color: 'blue', price: 50 },
-      { brand: 'Adidas', size: 8, model: 'casual', color: 'blue', price: 45 },
-      { brand: 'Puma', size: 9, model: 'formal', color: 'black', price: 60 },
-      { brand: 'Nike', size: 8, model: 'running', color: 'black', price: 50 },
-      { brand: 'Adidas', size: 9, model: 'casual', color: 'white', price: 45 },
-      { brand: 'Puma', size: 7, model: 'formal', color: 'blue', price: 60 }
+      { brand: 'Nike', size: 8, model: 'Nike Air Max 90', color: 'black', price: 150 },
+      { brand: 'Adidas', size: 9, model: 'Adidas UltraBoost', color: 'white', price: 180 },
+      { brand: 'Puma', size: 7, model: 'Puma Suede Classic', color: 'blue', price: 70 },
+      { brand: 'Nike', size: 9, model: 'Nike Pegasus', color: 'white', price: 120 },
+      { brand: 'Adidas', size: 8, model: 'Adidas Superstar', color: 'black', price: 90 },
+      { brand: 'Puma', size: 9, model: 'Puma RS-X', color: 'white', price: 110 },
+      { brand: 'Nike', size: 7, model: 'Nike Air Max 90', color: 'blue', price: 150 },
+      { brand: 'Adidas', size: 8, model: 'Adidas UltraBoost', color: 'blue', price: 180 },
+      { brand: 'Puma', size: 9, model: 'Puma Suede Classic', color: 'black', price: 70 },
+      { brand: 'Nike', size: 8, model: 'Nike Pegasus', color: 'black', price: 120 },
+      { brand: 'Adidas', size: 9, model: 'Adidas Superstar', color: 'white', price: 90 },
+      { brand: 'Puma', size: 7, model: 'Puma RS-X', color: 'blue', price: 110 }
     ];
 
     function displayProducts(filteredProducts) {
@@ -105,7 +108,7 @@
         const productWindow = document.createElement('div');
         productWindow.className = 'product-window';
         productWindow.innerHTML = `
-          <p>${product.model.charAt(0).toUpperCase() + product.model.slice(1)} Shoes</p>
+          <p>${product.model} Shoes</p>
           <p>Brand: ${product.brand}</p>
           <p>Size: ${product.size}</p>
           <p>Color: ${product.color}</p>
@@ -128,7 +131,7 @@
       const filteredProducts = products.filter(product => {
         return (brand === 'all' || product.brand.toLowerCase() === brand.toLowerCase()) &&
                (size === 'all' || product.size == size) &&
-               (model === 'all' || product.model.toLowerCase() === model.toLowerCase()) &&
+               (model === 'all' || product.model.toLowerCase().includes(model.toLowerCase())) &&
                (color === 'all' || product.color.toLowerCase() === color.toLowerCase());
       });
 
