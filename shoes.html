@@ -56,12 +56,12 @@
       <label for="model">Model:</label>
       <select id="model">
         <option value="all">All</option>
-        <option value="airmax90">Nike Air Max 90</option>
-        <option value="ultraboost">Adidas UltraBoost</option>
-        <option value="suedeclassic">Puma Suede Classic</option>
-        <option value="pegasus">Nike Pegasus</option>
-        <option value="superstar">Adidas Superstar</option>
-        <option value="rsx">Puma RS-X</option>
+        <option value="Nike Air Max 90">Nike Air Max 90</option>
+        <option value="Adidas UltraBoost">Adidas UltraBoost</option>
+        <option value="Puma Suede Classic">Puma Suede Classic</option>
+        <option value="Nike Pegasus">Nike Pegasus</option>
+        <option value="Adidas Superstar">Adidas Superstar</option>
+        <option value="Puma RS-X">Puma RS-X</option>
       </select>
 
       <label for="color">Color:</label>
@@ -131,7 +131,7 @@
       const filteredProducts = products.filter(product => {
         return (brand === 'all' || product.brand.toLowerCase() === brand.toLowerCase()) &&
                (size === 'all' || product.size == size) &&
-               (model === 'all' || product.model.toLowerCase().includes(model.toLowerCase())) &&
+               (model === 'all' || product.model.toLowerCase() === model.toLowerCase()) &&
                (color === 'all' || product.color.toLowerCase() === color.toLowerCase());
       });
 
