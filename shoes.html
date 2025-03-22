@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shoes - Mimi Boutique</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .product-window {
+      width: 200px;
+      height: 200px;
+      border: 1px solid #ccc;
+      margin: 10px;
+      display: inline-block;
+    }
+    .filter {
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -22,26 +34,93 @@
   </header>
 
   <main>
-    <section class="products">
-      <div class="product">
-        <img src="images/shoe1.jpg" alt="Running Shoes">
-        <h3>Running Shoes</h3>
-        <p>$50.00</p>
-        <button onclick="addToCart('Running Shoes', 50)">Add to Cart</button>
-      </div>
-      <div class="product">
-        <img src="images/shoe2.jpg" alt="Casual Shoes">
-        <h3>Casual Shoes</h3>
-        <p>$45.00</p>
-        <button onclick="addToCart('Casual Shoes', 45)">Add to Cart</button>
-      </div>
-    </section>
+    <div class="filter">
+      <label for="brand">Brand:</label>
+      <select id="brand">
+        <option value="all">All</option>
+        <option value="nike">Nike</option>
+        <option value="adidas">Adidas</option>
+        <option value="puma">Puma</option>
+      </select>
+
+      <label for="size">Size:</label>
+      <select id="size">
+        <option value="all">All</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+      </select>
+
+      <label for="model">Model:</label>
+      <select id="model">
+        <option value="all">All</option>
+        <option value="running">Running</option>
+        <option value="casual">Casual</option>
+        <option value="formal">Formal</option>
+      </select>
+
+      <label for="color">Color:</label>
+      <select id="color">
+        <option value="all">All</option>
+        <option value="black">Black</option>
+        <option value="white">White</option>
+        <option value="blue">Blue</option>
+      </select>
+
+      <button onclick="filterProducts()">Filter</button>
+    </div>
+
+    <div id="product-container">
+      <!-- Product windows will be added here -->
+    </div>
   </main>
 
   <footer>
     <p>&copy; 2023 Mimi Boutique. All rights reserved.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    const products = [
+      // Add your product objects here
+      { brand: 'Nike', size: 8, model: 'running', color: 'black' },
+      { brand: 'Adidas', size: 9, model: 'casual', color: 'white' },
+      // Add more products as needed
+    ];
+
+    function displayProducts(filteredProducts) {
+      const container = document.getElementById('product-container');
+      container.innerHTML = '';
+      filteredProducts.forEach(product => {
+        const productWindow = document.createElement('div');
+        productWindow.className = 'product-window';
+        productWindow.innerHTML = `
+          <p>Brand: ${product.brand}</p>
+          <p>Size: ${product.size}</p>
+          <p>Model: ${product.model}</p>
+          <p>Color: ${product.color}</p>
+        `;
+        container.appendChild(productWindow);
+      });
+    }
+
+    function filterProducts() {
+      const brand = document.getElementById('brand').value;
+      const size = document.getElementById('size').value;
+      const model = document.getElementById('model').value;
+      const color = document.getElementById('color').value;
+
+      const filteredProducts = products.filter(product => {
+        return (brand === 'all' || product.brand === brand) &&
+               (size === 'all' || product.size == size) &&
+               (model === 'all' || product.model === model) &&
+               (color === 'all' || product.color === color);
+      });
+
+      displayProducts(filteredProducts);
+    }
+
+    // Initial display of products
+    displayProducts(products);
+  </script>
 </body>
 </html>
