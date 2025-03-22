@@ -12,6 +12,8 @@
       border: 1px solid #ccc;
       margin: 10px;
       display: inline-block;
+      text-align: center;
+      padding: 10px;
     }
     .filter {
       margin-bottom: 20px;
@@ -81,18 +83,18 @@
 
   <script>
     const products = [
-      { brand: 'Nike', size: 8, model: 'running', color: 'black' },
-      { brand: 'Adidas', size: 9, model: 'casual', color: 'white' },
-      { brand: 'Puma', size: 7, model: 'formal', color: 'blue' },
-      { brand: 'Nike', size: 9, model: 'running', color: 'white' },
-      { brand: 'Adidas', size: 8, model: 'casual', color: 'black' },
-      { brand: 'Puma', size: 9, model: 'formal', color: 'white' },
-      { brand: 'Nike', size: 7, model: 'running', color: 'blue' },
-      { brand: 'Adidas', size: 8, model: 'casual', color: 'blue' },
-      { brand: 'Puma', size: 9, model: 'formal', color: 'black' },
-      { brand: 'Nike', size: 8, model: 'running', color: 'black' },
-      { brand: 'Adidas', size: 9, model: 'casual', color: 'white' },
-      { brand: 'Puma', size: 7, model: 'formal', color: 'blue' }
+      { brand: 'Nike', size: 8, model: 'running', color: 'black', price: 50 },
+      { brand: 'Adidas', size: 9, model: 'casual', color: 'white', price: 45 },
+      { brand: 'Puma', size: 7, model: 'formal', color: 'blue', price: 60 },
+      { brand: 'Nike', size: 9, model: 'running', color: 'white', price: 50 },
+      { brand: 'Adidas', size: 8, model: 'casual', color: 'black', price: 45 },
+      { brand: 'Puma', size: 9, model: 'formal', color: 'white', price: 60 },
+      { brand: 'Nike', size: 7, model: 'running', color: 'blue', price: 50 },
+      { brand: 'Adidas', size: 8, model: 'casual', color: 'blue', price: 45 },
+      { brand: 'Puma', size: 9, model: 'formal', color: 'black', price: 60 },
+      { brand: 'Nike', size: 8, model: 'running', color: 'black', price: 50 },
+      { brand: 'Adidas', size: 9, model: 'casual', color: 'white', price: 45 },
+      { brand: 'Puma', size: 7, model: 'formal', color: 'blue', price: 60 }
     ];
 
     function displayProducts(filteredProducts) {
@@ -102,10 +104,12 @@
         const productWindow = document.createElement('div');
         productWindow.className = 'product-window';
         productWindow.innerHTML = `
+          <p>${product.model.charAt(0).toUpperCase() + product.model.slice(1)} Shoes</p>
           <p>Brand: ${product.brand}</p>
           <p>Size: ${product.size}</p>
-          <p>Model: ${product.model}</p>
           <p>Color: ${product.color}</p>
+          <p>Price: $${product.price.toFixed(2)}</p>
+          <button onclick="addToCart('${product.brand}', ${product.size}, '${product.model}', '${product.color}', ${product.price})">Add to Cart</button>
         `;
         container.appendChild(productWindow);
       });
@@ -125,6 +129,11 @@
       });
 
       displayProducts(filteredProducts);
+    }
+
+    function addToCart(brand, size, model, color, price) {
+      // Add to cart functionality
+      alert(`Added ${model} shoes to cart.`);
     }
 
     // Initial display of products
