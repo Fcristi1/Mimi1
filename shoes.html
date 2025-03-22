@@ -108,7 +108,7 @@
         const productWindow = document.createElement('div');
         productWindow.className = 'product-window';
         productWindow.innerHTML = `
-          <p>${product.model} Shoes</p>
+          <p>${product.model}</p>
           <p>Brand: ${product.brand}</p>
           <p>Size: ${product.size}</p>
           <p>Color: ${product.color}</p>
@@ -149,7 +149,7 @@
 
     function addToCart(brand, size, model, color, price) {
       // Add to cart functionality
-      alert(`Added ${model} shoes to cart.`);
+      alert(`Added ${model} to cart.`);
     }
 
     // Initial display of products
